@@ -1,33 +1,58 @@
-const display = document.getElementById("display");
+// Scroll To Top Button
 
-function appendValue(value) {
-    display.value += value;
-}
+const scrollTop = document.getElementById("scrollTop");
 
-function clearDisplay() {
-    display.value = "";
-}
+window.addEventListener("scroll", function () {
 
-function deleteLast() {
-    display.value = display.value.slice(0, -1);
-}
+    if (window.scrollY > 400) {
+        scrollTop.style.display = "block";
+    } else {
+        scrollTop.style.display = "none";
+    }
 
-function calculate() {
+});
 
-    try {
+scrollTop.addEventListener("click", function () {
 
-        if (display.value === "") {
-            return;
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+});
+
+
+// Navbar Active Link
+
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-links a");
+
+window.addEventListener("scroll", function () {
+
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.clientHeight;
+
+        if (window.scrollY >= sectionTop &&
+            window.scrollY < sectionTop + sectionHeight) {
+
+            current = section.getAttribute("id");
+
         }
 
-        display.value = eval(display.value);
+    });
 
-    } catch (error) {
+    navLinks.forEach(link => {
 
-        display.value = "Error";
+        link.classList.remove("active");
 
-        setTimeout(() => {
-            display.value = "";
-        }, 1000);
-    }
-}
+        if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+        }
+
+    });
+
+});
