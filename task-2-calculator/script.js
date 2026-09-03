@@ -13,9 +13,21 @@ function deleteLast() {
 }
 
 function calculate() {
+
     try {
+
+        if (display.value === "") {
+            return;
+        }
+
         display.value = eval(display.value);
-    } catch {
+
+    } catch (error) {
+
         display.value = "Error";
+
+        setTimeout(() => {
+            display.value = "";
+        }, 1000);
     }
 }
